@@ -1,4 +1,5 @@
 import System.Environment
+import System.IO
 import Control.Exception
 
 main = do
@@ -6,6 +7,9 @@ main = do
     if (length args == 1)
         then putStrLn "Correct number of args found!"
         else error "OOPS!"
-    content <- readFile (args!!0)
-    putStr content
+    handle <- openFile (args!!0) ReadMode
+    content <- hGetContents handle
+    let singlelines = lines content
+    print singlelines
+    hClose handle
 
